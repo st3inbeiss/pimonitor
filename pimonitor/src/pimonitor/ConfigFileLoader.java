@@ -21,14 +21,12 @@ public class ConfigFileLoader {
         try {
             File fXmlFile = new File(configFile);
             System.out.println("Getting config from File: " + fXmlFile.getAbsolutePath());
-
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(fXmlFile);
             doc.getDocumentElement().normalize();
         } catch (IOException | ParserConfigurationException | DOMException | SAXException e) {
-            System.out.println("Failed to get config!");
-            e.printStackTrace();
+            System.out.println("Failed to get config!: " + e.getMessage());
         }
     }
 
@@ -48,21 +46,9 @@ public class ConfigFileLoader {
                 TSChannel tsChannel = new TSChannel(
                         eElement.getElementsByTagName("key").item(0).getTextContent(),
                         eElement.getElementsByTagName("field").item(0).getTextContent());
-                
+
                 channelMap.put(eElement.getAttribute("id"), tsChannel);
-
-                if (Config.getDebugMode()) {
-                    String debugMsg = "Loaded Channel with ID "
-                            + eElement.getAttribute("id")
-                            + " with channel Key "
-                            + eElement.getElementsByTagName("key").item(0).getTextContent()
-                            + " and Field #"
-                            + eElement.getElementsByTagName("field").item(0).getTextContent();
-
-                    System.out.println(debugMsg);
-                }
             }
-
         }
         return channelMap;
     }
