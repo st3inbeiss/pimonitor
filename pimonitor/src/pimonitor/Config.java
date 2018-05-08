@@ -6,9 +6,8 @@ public class Config {
 
     private static Config instance;
     private static final String CONFIG_FILE = "config.xml";
-
     private static boolean debugMode;
-    private static String updateInterval;
+    private static long updateInterval;
     private static HashMap<String, TSChannel> channelMap;
 
     private Config() {
@@ -23,15 +22,15 @@ public class Config {
             System.out.println("Debug mode is OFF");
         }
 
-        updateInterval = cfl.getConfigValue("updateInterval");
+        updateInterval = Long.valueOf(cfl.getConfigValue("updateInterval"));
 
-        if (Config.getDebugMode()) {
+        if (Config.isDebugMode()) {
             System.out.println("Update Interval: " + updateInterval + "ms");
         }
 
         channelMap = cfl.getChannels();
 
-        if (Config.getDebugMode()) {
+        if (Config.isDebugMode()) {
             for (String key : channelMap.keySet()) {
                 String debugMsg = "Loaded Channel with ID "
                         + key
@@ -52,11 +51,15 @@ public class Config {
         return instance;
     }
 
-    public static boolean getDebugMode() {
+    public static boolean isDebugMode() {
         return debugMode;
     }
 
     public static HashMap<String, TSChannel> getChannelMap() {
         return channelMap;
+    }
+     
+    public static long getUpdateInterval() {
+        return updateInterval;
     }
 }

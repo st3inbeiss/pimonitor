@@ -3,17 +3,13 @@
     <debugMode>true</debugMode>
     <updateInterval>20000</updateInterval>
     <channels>
-        <channel id="cpu">
-            <key>testkey-cpu</key>
+        <channel id="random">
+            <key>S27C7UVFC4X9PKAK</key>
             <field>1</field>
         </channel>
-        <channel id="mem">
-            <key>testkey-mem</key>
+        <channel id="cpu">
+            <key>S27C7UVFC4X9PKAK</key>
             <field>2</field>
-        </channel>
-        <channel id="cputemp">
-            <key>testkey-cputemp</key>
-            <field>3</field>
         </channel>
     </channels>
 </root>
