@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <debugMode>true</debugMode>
+    <updateInterval>20000</updateInterval>
+    <channels>
+        <channel id="cpu">
+            <key>testkey-cpu</key>
+            <field>1</field>
+        </channel>
+        <channel id="mem">
+            <key>testkey-mem</key>
+            <field>2</field>
+        </channel>
+        <channel id="cputemp">
+            <key>testkey-cputemp</key>
+            <field>3</field>
+        </channel>
+    </channels>
+</root>
