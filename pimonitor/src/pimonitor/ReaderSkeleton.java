@@ -1,28 +1,30 @@
 package pimonitor;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 /**
- * Channel to write random numbers to Thingspeak. Makes no sense, I know.
+ * This is a skeleton for new readers.
  *
  * @author st3inbeiss
  */
-public class ReaderRandom implements ChannelInterface {
+public class ReaderSkeleton implements ChannelInterface {
 
     private final TSChannel chan;
 
-    public ReaderRandom() {
+    /**
+     * Constructor WITHOUT PARAMETERS.
+     */
+    public ReaderSkeleton() {
         String className = this.getClass().getSimpleName();
         chan = Config.getChannelMap().get(className);
     }
 
     @Override
     public String getValue() {
-        return Integer.toString(ThreadLocalRandom.current().nextInt(0, 100));
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public TSChannel getChannel() {
-        return this.chan;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+
 }

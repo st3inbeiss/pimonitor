@@ -3,11 +3,11 @@
     <debugMode>true</debugMode>
     <updateInterval>20000</updateInterval>
     <channels>
-        <channel id="random">
+        <channel id="ReaderRandom">
             <key>S27C7UVFC4X9PKAK</key>
             <field>1</field>
         </channel>
-        <channel id="cpu">
+        <channel id="ReaderCPU">
             <key>S27C7UVFC4X9PKAK</key>
             <field>2</field>
         </channel>
