@@ -2,25 +2,47 @@ package pimonitor;
 
 import java.util.ArrayList;
 
+/**
+ * Class to manage all the ThingSpeak-Channels and generate the strings for the
+ HTTPGetter to process. Sorry for the confusing String-handling stuff
+ * in the send()-Method.
+ *
+ * @author st3inbeiss
+ */
 public class ChannelManager {
 
     private final ArrayList<ChannelInterface> channelList;
-    private final ThingspeakSender tSender;
+    private final HTTPGetter httpGetter;
 
     public ChannelManager() {
         channelList = new ArrayList();
-        tSender = new ThingspeakSender();
+        httpGetter = new HTTPGetter();
     }
 
-    public void registerChannel(ChannelInterface ci) {
-        channelList.add(ci);
+    /**
+     * Adds a channel to its list which is being processed when send() is
+     * called.
+     *
+     * @param channel The channel, obviously.
+     */
+    public void registerChannel(ChannelInterface channel) {
+        channelList.add(channel);
     }
 
+    /**
+     * Generates the URL with the GET-Parameters and hands them over to the
+ HTTPGetter.
+     */
     public void send() {
         ArrayList<String> GETStrings = new ArrayList();
 
         channelList.forEach((ci) -> {
+            // If this is the first value for a certain key, this variable
+            // will stay false.
             boolean added = false;
+            // Search for the current key in all the currently available
+            // GET-Strings and add the value to the String with the
+            // corersponding key.
             for (String GETString : GETStrings) {
                 if (GETString.startsWith(ci.getChannel().getChannelKey())) {
                     String fieldId = ci.getChannel().getFieldId();
@@ -28,10 +50,13 @@ public class ChannelManager {
                     String newGETString = GETString + "&field" + fieldId + "=" + value;
                     GETStrings.remove(GETString);
                     GETStrings.add(newGETString);
+                    // If the value has been added, make sure to not add it
+                    // again below.
                     added = true;
                 }
             }
 
+            // If it's really the first value for a key, add a new GET-String.
             if (!added) {
                 String apiKey = ci.getChannel().getChannelKey();
                 String fieldId = ci.getChannel().getFieldId();
@@ -41,8 +66,9 @@ public class ChannelManager {
             }
         });
 
-        for (String GETString : GETStrings) {
-            tSender.sendData("https://api.thingspeak.com/update?api_key=" + GETString);
-        }
+        // Hand all the GET-Strings over to the HTTPGetter.
+        GETStrings.forEach((GETString) -> {
+            httpGetter.sendData("https://api.thingspeak.com/update?api_key=" + GETString);
+        });
     }
 }

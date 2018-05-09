@@ -1,5 +1,10 @@
 package pimonitor;
 
+/**
+ * Data structure for Thingspeak-Channels.
+ *
+ * @author st3inbeiss
+ */
 public class TSChannel {
 
     private final String channelKey;

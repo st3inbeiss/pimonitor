@@ -7,19 +7,25 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
+ * Makes a GET-Request to a specified URL.
  *
- * @author piusd
+ * @author st3inbeiss
  */
-public class ThingspeakSender {
+public class HTTPGetter {
 
     private final String USER_AGENT = "Mozilla/5.0";
     private int responseCode;
     private StringBuilder response;
 
-    public ThingspeakSender() {
+    public HTTPGetter() {
 
     }
 
+    /**
+     * Sends the GET-Request to the specified URL.
+     *
+     * @param urlString The URL.
+     */
     public void sendData(String urlString) {
         try {
             URL url = new URL(urlString);

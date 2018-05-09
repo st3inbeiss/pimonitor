@@ -13,10 +13,20 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * Loads config from an XML-File.
+ *
+ * @author st3inbeiss
+ */
 public class ConfigFileLoader {
 
     private Document doc;
 
+    /**
+     * Loads the file.
+     *
+     * @param configFile The name of the file!
+     */
     public ConfigFileLoader(String configFile) {
         try {
             File fXmlFile = new File(configFile);
@@ -30,12 +40,24 @@ public class ConfigFileLoader {
         }
     }
 
+    /**
+     * Gets the value from a specific XML-tag. Tag goes like this:
+     * <configElement>return value of this function</configElement>
+     *
+     * @param configElement The name of the tag (see above).
+     * @return The value of the tag with the corresponding name.
+     */
     public String getConfigValue(String configElement) {
         NodeList nList = doc.getElementsByTagName(configElement);
         String configValue = nList.item(0).getTextContent();
         return configValue;
     }
 
+    /**
+     * Gets all the nodes with the name "channel" and parses them.
+     *
+     * @return HashMap of configured channels.
+     */
     public HashMap<String, TSChannel> getChannels() {
         HashMap channelMap = new HashMap();
         NodeList channelNodes = doc.getElementsByTagName("channel");
