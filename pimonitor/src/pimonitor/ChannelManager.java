@@ -1,15 +1,16 @@
 package pimonitor;
 
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 /**
  * Class to manage all the ThingSpeak-Channels and generate the strings for the
- HTTPGetter to process. Sorry for the confusing String-handling stuff
- * in the send()-Method.
+ * HTTPGetter to process. Sorry for the confusing String-handling stuff in the
+ * send()-Method.
  *
  * @author st3inbeiss
  */
-public class ChannelManager {
+public class ChannelManager extends TimerTask {
 
     private final ArrayList<ChannelInterface> channelList;
     private final HTTPGetter httpGetter;
@@ -31,9 +32,9 @@ public class ChannelManager {
 
     /**
      * Generates the URL with the GET-Parameters and hands them over to the
- HTTPGetter.
+     * HTTPGetter.
      */
-    public void send() {
+    public void sendValues() {
         ArrayList<String> GETStrings = new ArrayList();
 
         channelList.forEach((ci) -> {
@@ -70,5 +71,13 @@ public class ChannelManager {
         GETStrings.forEach((GETString) -> {
             httpGetter.sendData("https://api.thingspeak.com/update?api_key=" + GETString);
         });
+    }
+
+    /**
+     * What happens, when the task is scheduled.
+     */
+    @Override
+    public void run() {
+        sendValues();
     }
 }
